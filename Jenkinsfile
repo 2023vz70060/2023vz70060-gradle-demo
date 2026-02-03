@@ -18,10 +18,13 @@ pipeline {
 }
 
         stage('Archive Artifact') {
-            steps {
-                sh '/home/cloud/gradle-8.5/bin/gradle jar'
-                archiveArtifacts artifacts: 'build/libs/*.jar', allowEmptyArchive: false
-            }
-        }
-    }
+ 		   steps {
+       			 // Use the wrapper! It already has the permissions we need.
+       			 sh './gradlew jar'
+        
+       			 // Then archive the resulting jar file
+        		 archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+    			}
+		}
+    	}
 }
