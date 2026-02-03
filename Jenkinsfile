@@ -26,5 +26,12 @@ pipeline {
         		 archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
     			}
 		}
-    	}
+		
+	stage('SonarQube Analysis') {
+    		steps {
+        		withSonarQubeEnv('My Sonar Server') { // Use the name configured in Jenkins Global Tool Config
+            		sh './gradlew sonarqube'
+		}
+        }
+    }
 }
