@@ -9,11 +9,13 @@ pipeline {
         }
 
         stage('Build & Test') {
-            steps {
-                // Use the absolute path to gradle
-                sh '/home/cloud/gradle-8.5/bin/gradle clean test'
-            }
-        }
+   		 steps {
+        		// Ensure the wrapper is executable within the workspace
+        		sh 'chmod +x gradlew'
+        		// Run using the wrapper
+       			 sh './gradlew clean test'
+    }
+}
 
         stage('Archive Artifact') {
             steps {
